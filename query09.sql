@@ -7,3 +7,23 @@
 */
 
 -- Enter your SQL query here
+SELECT
+  passholder_type,
+  COUNT(*) AS num_trips
+FROM (
+  SELECT passholder_type
+  FROM indego.trips_2021_q3
+  UNION ALL
+  SELECT passholder_type
+  FROM indego.trips_2022_q3
+) AS all_trips
+GROUP BY passholder_type;
+
+/*
+Day Pass	61659
+Indego30	441856
+Indego365	109251
+NULL	43
+Walk-up	2
+*/
+

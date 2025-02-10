@@ -10,7 +10,11 @@
 */
 
 -- Enter your SQL query here
-
+SELECT 
+  ROUND(
+    ((SELECT COUNT(trip_id) FROM indego.trips_2022_q3) - (SELECT COUNT(trip_id) FROM indego.trips_2021_q3)) * 100.0 / (SELECT COUNT(trip_id) FROM indego.trips_2021_q3),
+    2
+  ) AS perc_change;
 
 
 /*
@@ -22,3 +26,9 @@
     This uses the type casting (number to string) and string concatenation
     operator (`||`, double pipes) that's essentially a `+` for strings.
 */
+
+SELECT 
+  ROUND(
+    ((SELECT COUNT(trip_id) FROM indego.trips_2022_q3) - (SELECT COUNT(trip_id) FROM indego.trips_2021_q3)) * 100.0 / (SELECT COUNT(trip_id) FROM indego.trips_2021_q3),
+    2
+  )::text || '%' AS perc_change;

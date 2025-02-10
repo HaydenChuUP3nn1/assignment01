@@ -20,6 +20,16 @@ create table indego.trips_2021_q3 (
     bike_type text
 );
 
+create extension if not exists postgis;
+
+
+COPY indego.trips_2021_q3 FROM 'C:/Users/bchu/Documents/GitHub/assignment01/indego-trips-2021-q3.csv' CSV HEADER;
+
+SELECT * FROM indego.trips_2021_q3
+
+
+create schema if not exists indego;
+
 drop table if exists indego.trips_2022_q3;
 
 create table indego.trips_2022_q3 (
@@ -41,3 +51,7 @@ create table indego.trips_2022_q3 (
 );
 
 create extension if not exists postgis;
+
+COPY indego.trips_2022_q3 FROM 'C:/Users/bchu/Documents/GitHub/assignment01/indego-trips-2022-q3.csv' CSV HEADER;
+
+SELECT * FROM indego.trips_2022_q3
