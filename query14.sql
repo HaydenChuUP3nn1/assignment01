@@ -17,8 +17,3 @@ ORDER BY distance ASC
 LIMIT 1;
 
 
-
-/*
-3208	34th & Spruce	200
-*/  
-
