@@ -1,3 +1,5 @@
+-- Active: 1738180041736@@localhost@5432@musa_509
+-- Active: 1738180041736@@localhost@5432@postgres
 /*
     What is the percent change in trips in Q3 2022 as compared to Q3 2021?
 
@@ -26,7 +28,6 @@ SELECT
     This uses the type casting (number to string) and string concatenation
     operator (`||`, double pipes) that's essentially a `+` for strings.
 */
-
 SELECT 
   ROUND(
     ((SELECT COUNT(trip_id) FROM indego.trips_2022_q3) - (SELECT COUNT(trip_id) FROM indego.trips_2021_q3)) * 100.0 / (SELECT COUNT(trip_id) FROM indego.trips_2021_q3),

@@ -9,6 +9,7 @@
 */
 
 -- Enter your SQL query here
+
 SELECT
   start_station AS station_id,
   ST_MakePoint(start_lon, start_lat) AS station_geog,
@@ -34,8 +35,9 @@ LIMIT 5;
 3032	0101000000E8305F5E80CB52C0B96DDFA3FEF84340	868
 3066	0101000000ED66463F1ACB52C0A2629CBF09F94340	818
 */
-
 /*
     Hint: Use the `EXTRACT` function to get the hour of the day from the
     timestamp.
 */
+
+

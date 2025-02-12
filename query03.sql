@@ -1,3 +1,5 @@
+-- Active: 1738180041736@@localhost@5432@musa_509
+-- Active: 1738180041736@@localhost@5432@postgres
 /*
     What is the average duration of a trip for 2021?
 

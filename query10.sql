@@ -1,3 +1,5 @@
+-- Active: 1738180041736@@localhost@5432@musa_509
+-- Active: 1738180041736@@localhost@5432@postgres
 /*
     Using the station status dataset, find the distance in meters of each
     station from Meyerson Hall. Use latitude 39.952415 and longitude -75.192584
@@ -8,3 +10,22 @@
 */
 
 -- Enter your SQL query here
+SELECT 
+  id AS station_id,
+  geog AS station_geog,
+  ROUND(ST_DISTANCE(geog, 'POINT(-75.192584 39.952415)'::geography) / 50) * 50 AS distance
+FROM 
+  indego.station_statuses
+
+
+SELECT
+    id AS station_id,
+    ST_ASTEXT(geog) AS station_geog,
+    ROUND(
+      ST_Distance(
+        indego.station_statuses.geog,
+        ST_SetSRID(ST_MakePoint(-75.192584, 39.952415), 4326)::geography
+      ) / 50
+    ) * 50 AS distance
+FROM indego.station_statuses
+ORDER BY distance DESC;
