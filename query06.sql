@@ -22,8 +22,3 @@ COUNT(*) AS num_trips
 FROM indego.trips_2022_q3
 WHERE duration < (10 * 60)
 GROUP BY trip_year, trip_quarter;
-
-/*
-2021	3	299994
-2022	3	311915
-*/  
