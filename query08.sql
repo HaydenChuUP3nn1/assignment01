@@ -11,25 +11,22 @@
 -- Enter your SQL query here
 
 SELECT
-start_station AS station_id,
-ST_MakePoint(start_lon, start_lat) AS station_geog,
-COUNT(*) AS num_trips
-FROM indego.trips_2021_q3
-WHERE EXTRACT(HOUR FROM start_time) BETWEEN 7 AND 9
-GROUP BY start_station, start_lon, start_lat
-UNION ALL
-SELECT
-start_station AS station_id,
-ST_MakePoint(start_lon, start_lat) AS station_geog,
-COUNT(*) AS num_trips
-FROM indego.trips_2022_q3
-WHERE EXTRACT(HOUR FROM start_time) BETWEEN 7 AND 9
-GROUP BY start_station, start_lon, start_lat
+    station_id,
+    station_geog::geography,
+    COUNT(*) AS num_trips
+FROM (
+    SELECT
+        start_station AS station_id,
+        ST_GEOMFROMTEXT('POINT(' || start_lon::text || ' ' || start_lat::text || ')') AS station_geog
+    FROM indego.trips_2021_q3
+    WHERE EXTRACT(HOUR FROM start_time) >= 7 AND EXTRACT(HOUR FROM start_time) < 10
+    UNION ALL
+    SELECT
+        start_station AS station_id,
+        ST_GEOMFROMTEXT('POINT(' || start_lon::text || ' ' || start_lat::text || ')') AS station_geog
+    FROM indego.trips_2022_q3
+    WHERE EXTRACT(HOUR FROM start_time) >= 7 AND EXTRACT(HOUR FROM start_time) < 10
+) AS combined_trips
+GROUP BY station_id, station_geog
 ORDER BY num_trips DESC
 LIMIT 5;
-
-
-/*
-    Hint: Use the `EXTRACT` function to get the hour of the day from the
-    timestamp.
-*/
