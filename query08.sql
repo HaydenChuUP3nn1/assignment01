@@ -11,23 +11,25 @@
 -- Enter your SQL query here
 
 SELECT
-    station_id,
-    station_geog::geography,
+    combined_trips.start_station AS station_id,
+    ss.geog AS station_geog,
     COUNT(*) AS num_trips
 FROM (
     SELECT
-        start_station AS station_id,
-        ST_GEOMFROMTEXT('POINT(' || start_lon::text || ' ' || start_lat::text || ')') AS station_geog
+        start_station,
+        start_time
     FROM indego.trips_2021_q3
-    WHERE EXTRACT(HOUR FROM start_time) >= 7 AND EXTRACT(HOUR FROM start_time) < 10
+    WHERE EXTRACT(HOUR FROM start_time) IN (7, 8, 9)
     UNION ALL
     SELECT
-        start_station AS station_id,
-        ST_GEOMFROMTEXT('POINT(' || start_lon::text || ' ' || start_lat::text || ')') AS station_geog
+        start_station,
+        start_time
     FROM indego.trips_2022_q3
-    WHERE EXTRACT(HOUR FROM start_time) >= 7 AND EXTRACT(HOUR FROM start_time) < 10
+    WHERE EXTRACT(HOUR FROM start_time) IN (7, 8, 9)
 ) AS combined_trips
-GROUP BY station_id, station_geog
+INNER JOIN indego.station_statuses AS ss
+    ON CAST(ss.id AS TEXT) = CAST(combined_trips.start_station AS TEXT)
+GROUP BY combined_trips.start_station, ss.geog
 ORDER BY num_trips DESC
 LIMIT 5;
 
